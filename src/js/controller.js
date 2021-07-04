@@ -1,5 +1,6 @@
-import 'regenerator-runtime/runtime';
 import icons from '../img/icons.svg'; // If using Parcel 2, write 'url:../img/icons.svg'
+import 'regenerator-runtime/runtime';
+import 'core-js/core';
 
 const recipeContainer = document.querySelector('.recipe');
 
@@ -19,20 +20,23 @@ const renderSpinner = function (parentEl) {
   const markup = `
   <div class="spinner">
     <svg>
-      <use href="src/img/icons.svg#icon-loader"></use>
+      <use href="${icons}#icon-loader"></use>
     </svg>
   </div>`;
+  parentEl.innerHTML = '';
   parentEl.insertAdjacentHTML('afterbegin', markup);
 };
 
 const showRecipe = async function () {
   try {
+    // 1) Loading recipe
+    renderSpinner(recipeContainer);
     const res = await fetch(
       `https://forkify-api.herokuapp.com/api/v2/recipes/5ed6604591c37cdc054bcc7e?key=%3C52d32e8d-7f3c-4751-91eb-2da87e23c7d9%3E`
     );
     const data = await res.json();
-
     if (!res.ok) throw new Error(`${data.message} (${res.status})`);
+
     let { recipe } = data.data;
     recipe = {
       id: recipe.id,
@@ -46,7 +50,7 @@ const showRecipe = async function () {
     };
     console.log(recipe);
 
-    // Rendering recipe:
+    // 2) Rendering recipe:
     const markup = `
     <figure class="recipe__fig">
     <img src="${recipe.image}" alt="${recipe.title}" class="recipe__img" />
