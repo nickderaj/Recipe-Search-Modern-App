@@ -1475,6 +1475,13 @@ var RecipeView = /*#__PURE__*/function () {
 
       _classPrivateFieldGet(this, _parentElement).insertAdjacentHTML('afterbegin', markup);
     }
+  }, {
+    key: "addHandlerRender",
+    value: function addHandlerRender(handler) {
+      ['hashchange', 'load'].forEach(function (event) {
+        return window.addEventListener(event, handler);
+      });
+    }
   }]);
 
   return RecipeView;
@@ -2687,9 +2694,11 @@ var controlRecipes = /*#__PURE__*/function () {
   };
 }();
 
-['hashchange', 'load'].forEach(function (event) {
-  return window.addEventListener(event, controlRecipes);
-});
+var init = function init() {
+  _recipeView.default.addHandlerRender(controlRecipes);
+};
+
+init();
 },{"./model.js":"src/js/model.js","./views/recipeView.js":"src/js/views/recipeView.js","regenerator-runtime/runtime":"node_modules/regenerator-runtime/runtime.js","core-js/core":"node_modules/core-js/core/index.js"}],"node_modules/parcel-bundler/src/builtins/hmr-runtime.js":[function(require,module,exports) {
 var global = arguments[3];
 var OVERLAY_ID = '__parcel__error__overlay__';
