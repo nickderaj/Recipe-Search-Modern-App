@@ -1412,8 +1412,6 @@ function _defineProperties(target, props) { for (var i = 0; i < props.length; i+
 
 function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _defineProperties(Constructor.prototype, protoProps); if (staticProps) _defineProperties(Constructor, staticProps); return Constructor; }
 
-function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
-
 function _classPrivateFieldGet(receiver, privateMap) { var descriptor = _classExtractFieldDescriptor(receiver, privateMap, "get"); return _classApplyDescriptorGet(receiver, descriptor); }
 
 function _classApplyDescriptorGet(receiver, descriptor) { if (descriptor.get) { return descriptor.get.call(receiver); } return descriptor.value; }
@@ -1429,6 +1427,10 @@ function _classApplyDescriptorSet(receiver, descriptor, value) { if (descriptor.
 var _parentElement = /*#__PURE__*/new WeakMap();
 
 var _data = /*#__PURE__*/new WeakMap();
+
+var _errorMessage = /*#__PURE__*/new WeakMap();
+
+var _message = /*#__PURE__*/new WeakMap();
 
 var _clear = /*#__PURE__*/new WeakSet();
 
@@ -1456,11 +1458,14 @@ var RecipeView = /*#__PURE__*/function () {
       value: void 0
     });
 
-    _defineProperty(this, "renderSpinner", function () {
-      var markup = "\n    <div class=\"spinner\">\n      <svg>\n        <use href=\"".concat(_icons.default, "#icon-loader\"></use>\n      </svg>\n    </div>");
-      _classPrivateFieldGet(this, _parentElement).innerHTML = '';
+    _errorMessage.set(this, {
+      writable: true,
+      value: 'We could not find that recipe, please try another one.'
+    });
 
-      _classPrivateFieldGet(this, _parentElement).insertAdjacentHTML('afterbegin', markup);
+    _message.set(this, {
+      writable: true,
+      value: ''
     });
   }
 
@@ -1470,6 +1475,35 @@ var RecipeView = /*#__PURE__*/function () {
       _classPrivateFieldSet(this, _data, data);
 
       var markup = _classPrivateMethodGet(this, _generateMarkup, _generateMarkup2).call(this);
+
+      _classPrivateMethodGet(this, _clear, _clear2).call(this);
+
+      _classPrivateFieldGet(this, _parentElement).insertAdjacentHTML('afterbegin', markup);
+    }
+  }, {
+    key: "renderSpinner",
+    value: function renderSpinner() {
+      var markup = "\n    <div class=\"spinner\">\n      <svg>\n        <use href=\"".concat(_icons.default, "#icon-loader\"></use>\n      </svg>\n    </div>");
+
+      _classPrivateMethodGet(this, _clear, _clear2).call(this);
+
+      _classPrivateFieldGet(this, _parentElement).insertAdjacentHTML('afterbegin', markup);
+    }
+  }, {
+    key: "renderError",
+    value: function renderError() {
+      var message = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : _classPrivateFieldGet(this, _errorMessage);
+      var markup = "\n     <div class=\"error\">\n         <div>\n             <svg>\n               <use href=\"".concat(_icons.default, "#icon-alert-triangle\"></use>\n             </svg>\n         </div>\n         <p>").concat(message, "</p>\n    </div>");
+
+      _classPrivateMethodGet(this, _clear, _clear2).call(this);
+
+      _classPrivateFieldGet(this, _parentElement).insertAdjacentHTML('afterbegin', markup);
+    }
+  }, {
+    key: "renderSuccess",
+    value: function renderSuccess() {
+      var message = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : _classPrivateFieldGet(this, _message);
+      var markup = "\n     <div class=\"message\">\n         <div>\n             <svg>\n               <use href=\"".concat(_icons.default, "#icon-smile\"></use>\n             </svg>\n         </div>\n         <p>").concat(message, "</p>\n    </div>");
 
       _classPrivateMethodGet(this, _clear, _clear2).call(this);
 
@@ -2679,7 +2713,8 @@ var controlRecipes = /*#__PURE__*/function () {
           case 10:
             _context.prev = 10;
             _context.t0 = _context["catch"](0);
-            console.log(_context.t0);
+
+            _recipeView.default.renderError();
 
           case 13:
           case "end":
