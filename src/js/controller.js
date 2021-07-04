@@ -8,7 +8,7 @@ import 'core-js/core';
 
 ///////////////////////////////////////
 
-const showRecipe = async function () {
+const controlRecipes = async function () {
   try {
     const id = window.location.hash.slice(1);
     // console.log(id);
@@ -26,5 +26,5 @@ const showRecipe = async function () {
 };
 
 ['hashchange', 'load'].forEach(event =>
-  window.addEventListener(event, showRecipe)
+  window.addEventListener(event, controlRecipes)
 );

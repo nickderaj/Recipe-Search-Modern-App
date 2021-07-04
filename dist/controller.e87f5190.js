@@ -887,7 +887,7 @@ Object.defineProperty(exports, "__esModule", {
 });
 exports.timeout = exports.getJSON = void 0;
 
-var _helpers = require("./helpers.js");
+var _config = require("./config.js");
 
 function asyncGeneratorStep(gen, resolve, reject, _next, _throw, key, arg) { try { var info = gen[key](arg); var value = info.value; } catch (error) { reject(error); return; } if (info.done) { resolve(value); } else { Promise.resolve(value).then(_next, _throw); } }
 
@@ -902,7 +902,7 @@ var getJSON = /*#__PURE__*/function () {
           case 0:
             _context.prev = 0;
             _context.next = 3;
-            return Promise.race([fetch(url), timeout(_helpers.TIMEOUT_SEC)]);
+            return Promise.race([fetch(url), timeout(_config.TIMEOUT_SEC)]);
 
           case 3:
             res = _context.sent;
@@ -951,7 +951,7 @@ var timeout = function timeout(s) {
 };
 
 exports.timeout = timeout;
-},{"./helpers.js":"src/js/helpers.js"}],"src/js/model.js":[function(require,module,exports) {
+},{"./config.js":"src/js/config.js"}],"src/js/model.js":[function(require,module,exports) {
 "use strict";
 
 Object.defineProperty(exports, "__esModule", {
@@ -2637,7 +2637,7 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
 
 // https://forkify-api.herokuapp.com/v2
 ///////////////////////////////////////
-var showRecipe = /*#__PURE__*/function () {
+var controlRecipes = /*#__PURE__*/function () {
   var _ref = _asyncToGenerator( /*#__PURE__*/regeneratorRuntime.mark(function _callee() {
     var id;
     return regeneratorRuntime.wrap(function _callee$(_context) {
@@ -2682,13 +2682,13 @@ var showRecipe = /*#__PURE__*/function () {
     }, _callee, null, [[0, 10]]);
   }));
 
-  return function showRecipe() {
+  return function controlRecipes() {
     return _ref.apply(this, arguments);
   };
 }();
 
 ['hashchange', 'load'].forEach(function (event) {
-  return window.addEventListener(event, showRecipe);
+  return window.addEventListener(event, controlRecipes);
 });
 },{"./model.js":"src/js/model.js","./views/recipeView.js":"src/js/views/recipeView.js","regenerator-runtime/runtime":"node_modules/regenerator-runtime/runtime.js","core-js/core":"node_modules/core-js/core/index.js"}],"node_modules/parcel-bundler/src/builtins/hmr-runtime.js":[function(require,module,exports) {
 var global = arguments[3];
