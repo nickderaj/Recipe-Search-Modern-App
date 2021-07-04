@@ -868,15 +868,22 @@ try {
   Function("r", "regeneratorRuntime = r")(runtime);
 }
 
+},{}],"src/img/icons.svg":[function(require,module,exports) {
+module.exports = "/icons.ae3c38d5.svg";
 },{}],"src/js/controller.js":[function(require,module,exports) {
 "use strict";
 
 require("regenerator-runtime/runtime");
 
+var _icons = _interopRequireDefault(require("../img/icons.svg"));
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
 function asyncGeneratorStep(gen, resolve, reject, _next, _throw, key, arg) { try { var info = gen[key](arg); var value = info.value; } catch (error) { reject(error); return; } if (info.done) { resolve(value); } else { Promise.resolve(value).then(_next, _throw); } }
 
 function _asyncToGenerator(fn) { return function () { var self = this, args = arguments; return new Promise(function (resolve, reject) { var gen = fn.apply(self, args); function _next(value) { asyncGeneratorStep(gen, resolve, reject, _next, _throw, "next", value); } function _throw(err) { asyncGeneratorStep(gen, resolve, reject, _next, _throw, "throw", err); } _next(undefined); }); }; }
 
+// If using Parcel 2, write 'url:../img/icons.svg'
 var recipeContainer = document.querySelector('.recipe');
 
 var timeout = function timeout(s) {
@@ -888,6 +895,11 @@ var timeout = function timeout(s) {
 }; // https://forkify-api.herokuapp.com/v2
 ///////////////////////////////////////
 
+
+var renderSpinner = function renderSpinner(parentEl) {
+  var markup = "\n  <div class=\"spinner\">\n    <svg>\n      <use href=\"src/img/icons.svg#icon-loader\"></use>\n    </svg>\n  </div>";
+  parentEl.insertAdjacentHTML('afterbegin', markup);
+};
 
 var showRecipe = /*#__PURE__*/function () {
   var _ref = _asyncToGenerator( /*#__PURE__*/regeneratorRuntime.mark(function _callee() {
@@ -929,22 +941,25 @@ var showRecipe = /*#__PURE__*/function () {
             };
             console.log(recipe); // Rendering recipe:
 
-            markup = "\n    <figure class=\"recipe__fig\">\n    <img src=\"".concat(recipe.image, "\" alt=\"").concat(recipe.title, "\" class=\"recipe__img\" />\n    <h1 class=\"").concat(recipe.title, "\">\n      <span>Pasta with tomato cream sauce</span>\n    </h1>\n  </figure>\n\n  <div class=\"recipe__details\">\n    <div class=\"recipe__info\">\n      <svg class=\"recipe__info-icon\">\n        <use href=\"src/img/icons.svg#icon-clock\"></use>\n      </svg>\n      <span class=\"recipe__info-data recipe__info-data--minutes\">").concat(recipe.cookingTime, "</span>\n      <span class=\"recipe__info-text\">minutes</span>\n    </div>\n    <div class=\"recipe__info\">\n      <svg class=\"recipe__info-icon\">\n        <use href=\"src/img/icons.svg#icon-users\"></use>\n      </svg>\n      <span class=\"recipe__info-data recipe__info-data--people\">").concat(recipe.servings, "</span>\n      <span class=\"recipe__info-text\">servings</span>\n\n      <div class=\"recipe__info-buttons\">\n        <button class=\"btn--tiny btn--increase-servings\">\n          <svg>\n            <use href=\"src/img/icons.svg#icon-minus-circle\"></use>\n          </svg>\n        </button>\n        <button class=\"btn--tiny btn--increase-servings\">\n          <svg>\n            <use href=\"src/img/icons.svg#icon-plus-circle\"></use>\n          </svg>\n        </button>\n      </div>\n    </div>\n\n    <div class=\"recipe__user-generated\">\n      <svg>\n        <use href=\"src/img/icons.svg#icon-user\"></use>\n      </svg>\n    </div>\n    <button class=\"btn--round\">\n      <svg class=\"\">\n        <use href=\"src/img/icons.svg#icon-bookmark-fill\"></use>\n      </svg>\n    </button>\n  </div>\n\n  <div class=\"recipe__ingredients\">\n    <h2 class=\"heading--2\">Recipe ingredients</h2>\n    <ul class=\"recipe__ingredient-list\">\n      <li class=\"recipe__ingredient\">\n        <svg class=\"recipe__icon\">\n          <use href=\"src/img/icons.svg#icon-check\"></use>\n        </svg>\n        <div class=\"recipe__quantity\">1000</div>\n        <div class=\"recipe__description\">\n          <span class=\"recipe__unit\">g</span>\n          pasta\n        </div>\n      </li>\n\n      <li class=\"recipe__ingredient\">\n        <svg class=\"recipe__icon\">\n          <use href=\"src/img/icons.svg#icon-check\"></use>\n        </svg>\n        <div class=\"recipe__quantity\">0.5</div>\n        <div class=\"recipe__description\">\n          <span class=\"recipe__unit\">cup</span>\n          ricotta cheese\n        </div>\n      </li>\n    </ul>\n  </div>\n\n  <div class=\"recipe__directions\">\n    <h2 class=\"heading--2\">How to cook it</h2>\n    <p class=\"recipe__directions-text\">\n      This recipe was carefully designed and tested by\n      <span class=\"recipe__publisher\">").concat(recipe.publisher, "</span>. Please check out\n      directions at their website.\n    </p>\n    <a\n      class=\"btn--small recipe__btn\"\n      href=\"").concat(recipe.sourceUrl, "\"\n      target=\"_blank\"\n    >\n      <span>Directions</span>\n      <svg class=\"search__icon\">\n        <use href=\"src/img/icons.svg#icon-arrow-right\"></use>\n      </svg>\n    </a>\n  </div>");
+            markup = "\n    <figure class=\"recipe__fig\">\n    <img src=\"".concat(recipe.image, "\" alt=\"").concat(recipe.title, "\" class=\"recipe__img\" />\n    <h1 class=\"").concat(recipe.title, "\">\n      <span>Pasta with tomato cream sauce</span>\n    </h1>\n  </figure>\n\n  <div class=\"recipe__details\">\n    <div class=\"recipe__info\">\n      <svg class=\"recipe__info-icon\">\n        <use href=\"").concat(_icons.default, "#icon-clock\"></use>\n      </svg>\n      <span class=\"recipe__info-data recipe__info-data--minutes\">").concat(recipe.cookingTime, "</span>\n      <span class=\"recipe__info-text\">minutes</span>\n    </div>\n    <div class=\"recipe__info\">\n      <svg class=\"recipe__info-icon\">\n        <use href=\"").concat(_icons.default, "#icon-users\"></use>\n      </svg>\n      <span class=\"recipe__info-data recipe__info-data--people\">").concat(recipe.servings, "</span>\n      <span class=\"recipe__info-text\">servings</span>\n\n      <div class=\"recipe__info-buttons\">\n        <button class=\"btn--tiny btn--increase-servings\">\n          <svg>\n            <use href=\"").concat(_icons.default, "#icon-minus-circle\"></use>\n          </svg>\n        </button>\n        <button class=\"btn--tiny btn--increase-servings\">\n          <svg>\n            <use href=\"").concat(_icons.default, "#icon-plus-circle\"></use>\n          </svg>\n        </button>\n      </div>\n    </div>\n\n    <div class=\"recipe__user-generated\">\n      <svg>\n        <use href=\"").concat(_icons.default, "#icon-user\"></use>\n      </svg>\n    </div>\n    <button class=\"btn--round\">\n      <svg class=\"\">\n        <use href=\"").concat(_icons.default, "#icon-bookmark-fill\"></use>\n      </svg>\n    </button>\n  </div>\n\n  <div class=\"recipe__ingredients\">\n    <h2 class=\"heading--2\">Recipe ingredients</h2>\n    <ul class=\"recipe__ingredient-list\">\n      ").concat(recipe.ingredients.map(function (ing) {
+              return "\n        <li class=\"recipe__ingredient\">\n        <svg class=\"recipe__icon\">\n          <use href=\"".concat(_icons.default, "#icon-check\"></use>\n        </svg>\n        <div class=\"recipe__quantity\">").concat(ing.quantity, "</div>\n        <div class=\"recipe__description\">\n          <span class=\"recipe__unit\">").concat(ing.unit, "</span>\n          ").concat(ing.description, "\n        </div>\n      </li>\n      ");
+            }).join(''), "\n    </ul>\n  </div>\n\n  <div class=\"recipe__directions\">\n    <h2 class=\"heading--2\">How to cook it</h2>\n    <p class=\"recipe__directions-text\">\n      This recipe was carefully designed and tested by\n      <span class=\"recipe__publisher\">").concat(recipe.publisher, "</span>. Please check out\n      directions at their website.\n    </p>\n    <a\n      class=\"btn--small recipe__btn\"\n      href=\"").concat(recipe.sourceUrl, "\"\n      target=\"_blank\"\n    >\n      <span>Directions</span>\n      <svg class=\"search__icon\">\n        <use href=\"").concat(_icons.default, "#icon-arrow-right\"></use>\n      </svg>\n    </a>\n  </div>");
+            recipeContainer.innerHTML = '';
             recipeContainer.insertAdjacentHTML('afterbegin', markup);
-            _context.next = 19;
+            _context.next = 20;
             break;
 
-          case 16:
-            _context.prev = 16;
+          case 17:
+            _context.prev = 17;
             _context.t0 = _context["catch"](0);
             alert(_context.t0);
 
-          case 19:
+          case 20:
           case "end":
             return _context.stop();
         }
       }
-    }, _callee, null, [[0, 16]]);
+    }, _callee, null, [[0, 17]]);
   }));
 
   return function showRecipe() {
@@ -964,14 +979,14 @@ showRecipe();
         <div class="recipe__details">
           <div class="recipe__info">
             <svg class="recipe__info-icon">
-              <use href="src/img/icons.svg#icon-clock"></use>
+              <use href="${icons}#icon-clock"></use>
             </svg>
             <span class="recipe__info-data recipe__info-data--minutes">45</span>
             <span class="recipe__info-text">minutes</span>
           </div>
           <div class="recipe__info">
             <svg class="recipe__info-icon">
-              <use href="src/img/icons.svg#icon-users"></use>
+              <use href="${icons}#icon-users"></use>
             </svg>
             <span class="recipe__info-data recipe__info-data--people">4</span>
             <span class="recipe__info-text">servings</span>
@@ -979,12 +994,12 @@ showRecipe();
             <div class="recipe__info-buttons">
               <button class="btn--tiny btn--increase-servings">
                 <svg>
-                  <use href="src/img/icons.svg#icon-minus-circle"></use>
+                  <use href="${icons}#icon-minus-circle"></use>
                 </svg>
               </button>
               <button class="btn--tiny btn--increase-servings">
                 <svg>
-                  <use href="src/img/icons.svg#icon-plus-circle"></use>
+                  <use href="${icons}#icon-plus-circle"></use>
                 </svg>
               </button>
             </div>
@@ -992,12 +1007,12 @@ showRecipe();
 
           <div class="recipe__user-generated">
             <svg>
-              <use href="src/img/icons.svg#icon-user"></use>
+              <use href="${icons}#icon-user"></use>
             </svg>
           </div>
           <button class="btn--round">
             <svg class="">
-              <use href="src/img/icons.svg#icon-bookmark-fill"></use>
+              <use href="${icons}#icon-bookmark-fill"></use>
             </svg>
           </button>
         </div>
@@ -1007,7 +1022,7 @@ showRecipe();
           <ul class="recipe__ingredient-list">
             <li class="recipe__ingredient">
               <svg class="recipe__icon">
-                <use href="src/img/icons.svg#icon-check"></use>
+                <use href="${icons}#icon-check"></use>
               </svg>
               <div class="recipe__quantity">1000</div>
               <div class="recipe__description">
@@ -1018,7 +1033,7 @@ showRecipe();
 
             <li class="recipe__ingredient">
               <svg class="recipe__icon">
-                <use href="src/img/icons.svg#icon-check"></use>
+                <use href="${icons}#icon-check"></use>
               </svg>
               <div class="recipe__quantity">0.5</div>
               <div class="recipe__description">
@@ -1043,12 +1058,12 @@ showRecipe();
           >
             <span>Directions</span>
             <svg class="search__icon">
-              <use href="src/img/icons.svg#icon-arrow-right"></use>
+              <use href="${icons}#icon-arrow-right"></use>
             </svg>
           </a>
         </div>
 */
-},{"regenerator-runtime/runtime":"node_modules/regenerator-runtime/runtime.js"}],"node_modules/parcel-bundler/src/builtins/hmr-runtime.js":[function(require,module,exports) {
+},{"regenerator-runtime/runtime":"node_modules/regenerator-runtime/runtime.js","../img/icons.svg":"src/img/icons.svg"}],"node_modules/parcel-bundler/src/builtins/hmr-runtime.js":[function(require,module,exports) {
 var global = arguments[3];
 var OVERLAY_ID = '__parcel__error__overlay__';
 var OldModule = module.bundle.Module;
