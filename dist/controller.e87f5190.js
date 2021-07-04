@@ -117,9 +117,7 @@ parcelRequire = (function (modules, cache, entry, globalName) {
   }
 
   return newRequire;
-})({"src/img/icons.svg":[function(require,module,exports) {
-module.exports = "/icons.ae3c38d5.svg";
-},{}],"node_modules/regenerator-runtime/runtime.js":[function(require,module,exports) {
+})({"node_modules/regenerator-runtime/runtime.js":[function(require,module,exports) {
 var define;
 /**
  * Copyright (c) 2014-present, Facebook, Inc.
@@ -870,6 +868,89 @@ try {
   Function("r", "regeneratorRuntime = r")(runtime);
 }
 
+},{}],"src/js/model.js":[function(require,module,exports) {
+"use strict";
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+exports.loadRecipe = exports.state = void 0;
+
+var _regeneratorRuntime = require("regenerator-runtime");
+
+function asyncGeneratorStep(gen, resolve, reject, _next, _throw, key, arg) { try { var info = gen[key](arg); var value = info.value; } catch (error) { reject(error); return; } if (info.done) { resolve(value); } else { Promise.resolve(value).then(_next, _throw); } }
+
+function _asyncToGenerator(fn) { return function () { var self = this, args = arguments; return new Promise(function (resolve, reject) { var gen = fn.apply(self, args); function _next(value) { asyncGeneratorStep(gen, resolve, reject, _next, _throw, "next", value); } function _throw(err) { asyncGeneratorStep(gen, resolve, reject, _next, _throw, "throw", err); } _next(undefined); }); }; }
+
+var state = {
+  recipe: {}
+};
+exports.state = state;
+
+var loadRecipe = /*#__PURE__*/function () {
+  var _ref = _asyncToGenerator( /*#__PURE__*/regeneratorRuntime.mark(function _callee(id) {
+    var res, data, recipe;
+    return regeneratorRuntime.wrap(function _callee$(_context) {
+      while (1) {
+        switch (_context.prev = _context.next) {
+          case 0:
+            _context.prev = 0;
+            _context.next = 3;
+            return fetch("https://forkify-api.herokuapp.com/api/v2/recipes/".concat(id, "?key=%3C52d32e8d-7f3c-4751-91eb-2da87e23c7d9%3E"));
+
+          case 3:
+            res = _context.sent;
+            _context.next = 6;
+            return res.json();
+
+          case 6:
+            data = _context.sent;
+
+            if (res.ok) {
+              _context.next = 9;
+              break;
+            }
+
+            throw new Error("".concat(data.message, " (").concat(res.status, ")"));
+
+          case 9:
+            // guard clause if data can't load
+            recipe = data.data.recipe;
+            state.recipe = {
+              id: recipe.id,
+              title: recipe.title,
+              publisher: recipe.publisher,
+              sourceUrl: recipe.source_url,
+              image: recipe.image_url,
+              servings: recipe.servings,
+              cookingTime: recipe.cooking_time,
+              ingredients: recipe.ingredients
+            };
+            console.log(state.recipe);
+            _context.next = 17;
+            break;
+
+          case 14:
+            _context.prev = 14;
+            _context.t0 = _context["catch"](0);
+            alert(_context.t0);
+
+          case 17:
+          case "end":
+            return _context.stop();
+        }
+      }
+    }, _callee, null, [[0, 14]]);
+  }));
+
+  return function loadRecipe(_x) {
+    return _ref.apply(this, arguments);
+  };
+}();
+
+exports.loadRecipe = loadRecipe;
+},{"regenerator-runtime":"node_modules/regenerator-runtime/runtime.js"}],"src/img/icons.svg":[function(require,module,exports) {
+module.exports = "/icons.ae3c38d5.svg";
 },{}],"node_modules/core-js/modules/_a-function.js":[function(require,module,exports) {
 module.exports = function (it) {
   if (typeof it != 'function') throw TypeError(it + ' is not a function!');
@@ -1992,6 +2073,8 @@ module.exports = require('../modules/_core');
 },{"../modules/core.dict":"node_modules/core-js/modules/core.dict.js","../modules/core.get-iterator-method":"node_modules/core-js/modules/core.get-iterator-method.js","../modules/core.get-iterator":"node_modules/core-js/modules/core.get-iterator.js","../modules/core.is-iterable":"node_modules/core-js/modules/core.is-iterable.js","../modules/core.delay":"node_modules/core-js/modules/core.delay.js","../modules/core.function.part":"node_modules/core-js/modules/core.function.part.js","../modules/core.object.is-object":"node_modules/core-js/modules/core.object.is-object.js","../modules/core.object.classof":"node_modules/core-js/modules/core.object.classof.js","../modules/core.object.define":"node_modules/core-js/modules/core.object.define.js","../modules/core.object.make":"node_modules/core-js/modules/core.object.make.js","../modules/core.number.iterator":"node_modules/core-js/modules/core.number.iterator.js","../modules/core.regexp.escape":"node_modules/core-js/modules/core.regexp.escape.js","../modules/core.string.escape-html":"node_modules/core-js/modules/core.string.escape-html.js","../modules/core.string.unescape-html":"node_modules/core-js/modules/core.string.unescape-html.js","../modules/_core":"node_modules/core-js/modules/_core.js"}],"src/js/controller.js":[function(require,module,exports) {
 "use strict";
 
+var model = _interopRequireWildcard(require("./model.js"));
+
 var _icons = _interopRequireDefault(require("../img/icons.svg"));
 
 require("regenerator-runtime/runtime");
@@ -1999,6 +2082,10 @@ require("regenerator-runtime/runtime");
 require("core-js/core");
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+function _getRequireWildcardCache(nodeInterop) { if (typeof WeakMap !== "function") return null; var cacheBabelInterop = new WeakMap(); var cacheNodeInterop = new WeakMap(); return (_getRequireWildcardCache = function (nodeInterop) { return nodeInterop ? cacheNodeInterop : cacheBabelInterop; })(nodeInterop); }
+
+function _interopRequireWildcard(obj, nodeInterop) { if (!nodeInterop && obj && obj.__esModule) { return obj; } if (obj === null || typeof obj !== "object" && typeof obj !== "function") { return { default: obj }; } var cache = _getRequireWildcardCache(nodeInterop); if (cache && cache.has(obj)) { return cache.get(obj); } var newObj = {}; var hasPropertyDescriptor = Object.defineProperty && Object.getOwnPropertyDescriptor; for (var key in obj) { if (key !== "default" && Object.prototype.hasOwnProperty.call(obj, key)) { var desc = hasPropertyDescriptor ? Object.getOwnPropertyDescriptor(obj, key) : null; if (desc && (desc.get || desc.set)) { Object.defineProperty(newObj, key, desc); } else { newObj[key] = obj[key]; } } } newObj.default = obj; if (cache) { cache.set(obj, newObj); } return newObj; }
 
 function asyncGeneratorStep(gen, resolve, reject, _next, _throw, key, arg) { try { var info = gen[key](arg); var value = info.value; } catch (error) { reject(error); return; } if (info.done) { resolve(value); } else { Promise.resolve(value).then(_next, _throw); } }
 
@@ -2024,7 +2111,7 @@ var renderSpinner = function renderSpinner(parentEl) {
 
 var showRecipe = /*#__PURE__*/function () {
   var _ref = _asyncToGenerator( /*#__PURE__*/regeneratorRuntime.mark(function _callee() {
-    var id, res, data, recipe, markup;
+    var id, recipe, markup;
     return regeneratorRuntime.wrap(function _callee$(_context) {
       while (1) {
         switch (_context.prev = _context.next) {
@@ -2042,60 +2129,33 @@ var showRecipe = /*#__PURE__*/function () {
 
           case 5:
             // guard clause on load
-            // 1) Loading recipe
-            renderSpinner(recipeContainer);
+            renderSpinner(recipeContainer); // 1) Loading recipe
+
             _context.next = 8;
-            return fetch("https://forkify-api.herokuapp.com/api/v2/recipes/".concat(id, "?key=%3C52d32e8d-7f3c-4751-91eb-2da87e23c7d9%3E"));
+            return model.loadRecipe(id);
 
           case 8:
-            res = _context.sent;
-            _context.next = 11;
-            return res.json();
-
-          case 11:
-            data = _context.sent;
-
-            if (res.ok) {
-              _context.next = 14;
-              break;
-            }
-
-            throw new Error("".concat(data.message, " (").concat(res.status, ")"));
-
-          case 14:
-            // guard clause if data can't load
-            recipe = data.data.recipe;
-            recipe = {
-              id: recipe.id,
-              title: recipe.title,
-              publisher: recipe.publisher,
-              sourceUrl: recipe.source_url,
-              image: recipe.image_url,
-              servings: recipe.servings,
-              cookingTime: recipe.cooking_time,
-              ingredients: recipe.ingredients
-            };
-            console.log(recipe); // 2) Rendering recipe:
+            recipe = model.state.recipe; // 2) Rendering recipe:
 
             markup = "\n    <figure class=\"recipe__fig\">\n    <img src=\"".concat(recipe.image, "\" alt=\"").concat(recipe.title, "\" class=\"recipe__img\" />\n    <h1 class=\"recipe__title\">\n    <span>").concat(recipe.title, "</span>\n    </h1>\n  </figure>\n\n  <div class=\"recipe__details\">\n    <div class=\"recipe__info\">\n      <svg class=\"recipe__info-icon\">\n        <use href=\"").concat(_icons.default, "#icon-clock\"></use>\n      </svg>\n      <span class=\"recipe__info-data recipe__info-data--minutes\">").concat(recipe.cookingTime, "</span>\n      <span class=\"recipe__info-text\">minutes</span>\n    </div>\n    <div class=\"recipe__info\">\n      <svg class=\"recipe__info-icon\">\n        <use href=\"").concat(_icons.default, "#icon-users\"></use>\n      </svg>\n      <span class=\"recipe__info-data recipe__info-data--people\">").concat(recipe.servings, "</span>\n      <span class=\"recipe__info-text\">servings</span>\n\n      <div class=\"recipe__info-buttons\">\n        <button class=\"btn--tiny btn--increase-servings\">\n          <svg>\n            <use href=\"").concat(_icons.default, "#icon-minus-circle\"></use>\n          </svg>\n        </button>\n        <button class=\"btn--tiny btn--increase-servings\">\n          <svg>\n            <use href=\"").concat(_icons.default, "#icon-plus-circle\"></use>\n          </svg>\n        </button>\n      </div>\n    </div>\n\n    <div class=\"recipe__user-generated\">\n      <svg>\n        <use href=\"").concat(_icons.default, "#icon-user\"></use>\n      </svg>\n    </div>\n    <button class=\"btn--round\">\n      <svg class=\"\">\n        <use href=\"").concat(_icons.default, "#icon-bookmark-fill\"></use>\n      </svg>\n    </button>\n  </div>\n\n  <div class=\"recipe__ingredients\">\n    <h2 class=\"heading--2\">Recipe ingredients</h2>\n    <ul class=\"recipe__ingredient-list\">\n      ").concat(recipe.ingredients.map(function (ing) {
               return "\n        <li class=\"recipe__ingredient\">\n        <svg class=\"recipe__icon\">\n          <use href=\"".concat(_icons.default, "#icon-check\"></use>\n        </svg>\n        <div class=\"recipe__quantity\">").concat(ing.quantity, "</div>\n        <div class=\"recipe__description\">\n          <span class=\"recipe__unit\">").concat(ing.unit, "</span>\n          ").concat(ing.description, "\n        </div>\n      </li>\n      ");
             }).join(''), "\n    </ul>\n  </div>\n\n  <div class=\"recipe__directions\">\n    <h2 class=\"heading--2\">How to cook it</h2>\n    <p class=\"recipe__directions-text\">\n      This recipe was carefully designed and tested by\n      <span class=\"recipe__publisher\">").concat(recipe.publisher, "</span>. Please check out\n      directions at their website.\n    </p>\n    <a\n      class=\"btn--small recipe__btn\"\n      href=\"").concat(recipe.sourceUrl, "\"\n      target=\"_blank\"\n    >\n      <span>Directions</span>\n      <svg class=\"search__icon\">\n        <use href=\"").concat(_icons.default, "#icon-arrow-right\"></use>\n      </svg>\n    </a>\n  </div>");
             recipeContainer.innerHTML = '';
             recipeContainer.insertAdjacentHTML('afterbegin', markup);
-            _context.next = 25;
+            _context.next = 17;
             break;
 
-          case 22:
-            _context.prev = 22;
+          case 14:
+            _context.prev = 14;
             _context.t0 = _context["catch"](0);
             alert(_context.t0);
 
-          case 25:
+          case 17:
           case "end":
             return _context.stop();
         }
       }
-    }, _callee, null, [[0, 22]]);
+    }, _callee, null, [[0, 14]]);
   }));
 
   return function showRecipe() {
@@ -2106,7 +2166,7 @@ var showRecipe = /*#__PURE__*/function () {
 ['hashchange', 'load'].forEach(function (event) {
   return window.addEventListener(event, showRecipe);
 });
-},{"../img/icons.svg":"src/img/icons.svg","regenerator-runtime/runtime":"node_modules/regenerator-runtime/runtime.js","core-js/core":"node_modules/core-js/core/index.js"}],"node_modules/parcel-bundler/src/builtins/hmr-runtime.js":[function(require,module,exports) {
+},{"./model.js":"src/js/model.js","../img/icons.svg":"src/img/icons.svg","regenerator-runtime/runtime":"node_modules/regenerator-runtime/runtime.js","core-js/core":"node_modules/core-js/core/index.js"}],"node_modules/parcel-bundler/src/builtins/hmr-runtime.js":[function(require,module,exports) {
 var global = arguments[3];
 var OVERLAY_ID = '__parcel__error__overlay__';
 var OldModule = module.bundle.Module;
@@ -2134,7 +2194,7 @@ var parent = module.bundle.parent;
 if ((!parent || !parent.isParcelRequire) && typeof WebSocket !== 'undefined') {
   var hostname = "" || location.hostname;
   var protocol = location.protocol === 'https:' ? 'wss' : 'ws';
-  var ws = new WebSocket(protocol + '://' + hostname + ':' + "57691" + '/');
+  var ws = new WebSocket(protocol + '://' + hostname + ':' + "57198" + '/');
 
   ws.onmessage = function (event) {
     checkedAssets = {};
