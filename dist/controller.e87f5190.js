@@ -1822,26 +1822,38 @@ var PaginationView = /*#__PURE__*/function (_View) {
   }
 
   _createClass(PaginationView, [{
+    key: "addHanderClick",
+    value: function addHanderClick(handler) {
+      this._parentElement.addEventListener('click', function (e) {
+        e.preventDefault();
+        var btn = e.target.closest('.btn--inline');
+        if (!btn) return;
+        var goToPage = +btn.dataset.goto;
+        handler(goToPage);
+      });
+    }
+  }, {
     key: "_generateMarkup",
     value: function _generateMarkup() {
       var curPage = this._data.page;
       var numPages = Math.ceil(this._data.results.length / this._data.resultsPerPage); //Page 1, and there are other pages
 
       if (curPage === 1 && numPages > 1) {
-        return "\n      <button class=\"btn--inline pagination__btn--next\">\n      <span>Page ".concat(curPage + 1, "</span>\n      <svg class=\"search__icon\">\n        <use href=\"").concat(_icons.default, "icon-arrow-right\"></use>\n      </svg>\n    </button>");
+        return "\n      <button data-goto=\"".concat(curPage + 1, "\" class=\"btn--inline pagination__btn--next\">\n      <span>Page ").concat(curPage + 1, "</span>\n      <svg class=\"search__icon\">\n        <use href=\"").concat(_icons.default, "#icon-arrow-right\"></use>\n      </svg>\n    </button>");
       } // Last page
 
 
       if (curPage === numPages && numPages > 1) {
-        return "<button class=\"btn--inline pagination__btn--prev\">\n      <svg class=\"search__icon\">\n        <use href=\"".concat(_icons.default, "#icon-arrow-left\"></use>\n      </svg>\n      <span>Page ").concat(curPage - 1, "</span>\n    </button>");
+        return "<button data-goto=\"".concat(curPage - 1, "\" class=\"btn--inline pagination__btn--prev\">\n      <svg class=\"search__icon\">\n        <use href=\"").concat(_icons.default, "#icon-arrow-left\"></use>\n      </svg>\n      <span>Page ").concat(curPage - 1, "</span>\n    </button>");
       } // Other page
 
 
       if (curPage < numPages) {
-        return "\n      <button class=\"btn--inline pagination__btn--next\">\n      <span>Page ".concat(curPage + 1, "</span>\n      <svg class=\"search__icon\">\n        <use href=\"").concat(_icons.default, "#icon-arrow-right\"></use>\n      </svg>\n    </button>\n      <button class=\"btn--inline pagination__btn--prev\">\n        <svg class=\"search__icon\">\n          <use href=\"").concat(_icons.default, "#icon-arrow-left\"></use>\n        </svg>\n        <span>Page ").concat(curPage - 1, "</span>\n      </button>"); // Page 1, no other pages
+        return "\n      <button data-goto=\"".concat(curPage + 1, "\" class=\"btn--inline pagination__btn--next\">\n      <span>Page ").concat(curPage + 1, "</span>\n      <svg class=\"search__icon\">\n        <use href=\"").concat(_icons.default, "#icon-arrow-right\"></use>\n      </svg>\n    </button>\n      <button data-goto=\"").concat(curPage - 1, "\" class=\"btn--inline pagination__btn--prev\">\n        <svg class=\"search__icon\">\n          <use href=\"").concat(_icons.default, "#icon-arrow-left\"></use>\n        </svg>\n        <span>Page ").concat(curPage - 1, "</span>\n      </button>");
+      } // Page 1, no other pages
 
-        return '';
-      }
+
+      return '';
     }
   }]);
 
@@ -3081,7 +3093,7 @@ var controlSearchResults = /*#__PURE__*/function () {
 
           case 7:
             // 3 Render results
-            _resultsView.default.render(model.getSearchResultsPage(2)); // 4 Render initial pagination buttons
+            _resultsView.default.render(model.getSearchResultsPage()); // 4 Render initial pagination buttons
 
 
             _paginationView.default.render(model.state.search);
@@ -3108,10 +3120,20 @@ var controlSearchResults = /*#__PURE__*/function () {
   };
 }();
 
+var controlPagination = function controlPagination(goToPage) {
+  // 1 Render new results
+  _resultsView.default.render(model.getSearchResultsPage(goToPage)); // 2 Render new pagination buttons
+
+
+  _paginationView.default.render(model.state.search);
+};
+
 var init = function init() {
   _recipeView.default.addHandlerRender(controlRecipes);
 
   _searchView.default.addHandlerSearch(controlSearchResults);
+
+  _paginationView.default.addHanderClick(controlPagination);
 };
 
 init();
@@ -3143,7 +3165,7 @@ var parent = module.bundle.parent;
 if ((!parent || !parent.isParcelRequire) && typeof WebSocket !== 'undefined') {
   var hostname = "" || location.hostname;
   var protocol = location.protocol === 'https:' ? 'wss' : 'ws';
-  var ws = new WebSocket(protocol + '://' + hostname + ':' + "50199" + '/');
+  var ws = new WebSocket(protocol + '://' + hostname + ':' + "61400" + '/');
 
   ws.onmessage = function (event) {
     checkedAssets = {};
