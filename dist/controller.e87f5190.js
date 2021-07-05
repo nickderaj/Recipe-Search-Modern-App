@@ -1101,11 +1101,16 @@ var updateServings = function updateServings(newServings) {
 
 exports.updateServings = updateServings;
 
+var persistBookmarks = function persistBookmarks() {
+  localStorage.setItem('bookmarks', JSON.stringify(state.bookmarks));
+};
+
 var addBookmark = function addBookmark(recipe) {
   // Add bookmark
   state.bookmarks.push(recipe); // Mark current recipe as bookmark
 
   if (recipe.id === state.recipe.id) state.recipe.bookmarked = true;
+  persistBookmarks();
 };
 
 exports.addBookmark = addBookmark;
@@ -1118,9 +1123,18 @@ var deleteBookmark = function deleteBookmark(id) {
   state.bookmarks.splice(index, 1); // Mark current recipe as not bookmarked
 
   if (id === state.recipe.id) state.recipe.bookmarked = false;
+  persistBookmarks();
 };
 
 exports.deleteBookmark = deleteBookmark;
+
+var init = function init() {
+  var storage = localStorage.getItem('bookmarks');
+  if (storage) state.bookmarks = JSON.parse(storage);
+};
+
+init();
+console.log(state.bookmarks);
 },{"regenerator-runtime":"node_modules/regenerator-runtime/runtime.js","./config.js":"src/js/config.js","./helpers.js":"src/js/helpers.js"}],"src/img/icons.svg":[function(require,module,exports) {
 module.exports = "/icons.ae3c38d5.svg";
 },{}],"src/js/views/View.js":[function(require,module,exports) {
@@ -2086,6 +2100,11 @@ var BookmarksView = /*#__PURE__*/function (_View) {
   }
 
   _createClass(BookmarksView, [{
+    key: "addHandlerRender",
+    value: function addHandlerRender(handler) {
+      window.addEventListener('load', handler);
+    }
+  }, {
     key: "_generateMarkup",
     value: function _generateMarkup() {
       return this._data.map(function (bookmark) {
@@ -3394,7 +3413,13 @@ var controlAddBookmark = function controlAddBookmark() {
   _bookmarksView.default.render(model.state.bookmarks);
 };
 
+var controlBookmarks = function controlBookmarks() {
+  _bookmarksView.default.render(model.state.bookmarks);
+};
+
 var init = function init() {
+  _bookmarksView.default.addHandlerRender(controlBookmarks);
+
   _recipeView.default.addHandlerRender(controlRecipes);
 
   _searchView.default.addHandlerSearch(controlSearchResults);
