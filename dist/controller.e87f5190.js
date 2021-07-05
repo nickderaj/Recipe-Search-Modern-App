@@ -959,7 +959,7 @@ exports.timeout = timeout;
 Object.defineProperty(exports, "__esModule", {
   value: true
 });
-exports.addBookmark = exports.updateServings = exports.getSearchResultsPage = exports.loadSearchResults = exports.loadRecipe = exports.state = void 0;
+exports.deleteBookmark = exports.addBookmark = exports.updateServings = exports.getSearchResultsPage = exports.loadSearchResults = exports.loadRecipe = exports.state = void 0;
 
 var _regeneratorRuntime = require("regenerator-runtime");
 
@@ -1109,6 +1109,18 @@ var addBookmark = function addBookmark(recipe) {
 };
 
 exports.addBookmark = addBookmark;
+
+var deleteBookmark = function deleteBookmark(id) {
+  // Delete bookmark
+  var index = state.bookmarks.findIndex(function (el) {
+    return el.id === id;
+  });
+  state.bookmarks.splice(index, 1); // Mark current recipe as not bookmarked
+
+  if (id === state.recipe.id) state.recipe.bookmarked = false;
+};
+
+exports.deleteBookmark = deleteBookmark;
 },{"regenerator-runtime":"node_modules/regenerator-runtime/runtime.js","./config.js":"src/js/config.js","./helpers.js":"src/js/helpers.js"}],"src/img/icons.svg":[function(require,module,exports) {
 module.exports = "/icons.ae3c38d5.svg";
 },{}],"src/js/views/View.js":[function(require,module,exports) {
@@ -3207,7 +3219,11 @@ var controlServings = function controlServings(newServings) {
 };
 
 var controlAddBookmark = function controlAddBookmark() {
-  model.addBookmark(model.state.recipe);
+  if (!model.state.recipe.bookmarked) {
+    model.addBookmark(model.state.recipe);
+  } else {
+    model.deleteBookmark(model.state.recipe.id);
+  }
 
   _recipeView.default.update(model.state.recipe);
 };
