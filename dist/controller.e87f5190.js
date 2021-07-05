@@ -1134,7 +1134,10 @@ var init = function init() {
 };
 
 init();
-console.log(state.bookmarks);
+
+var clearBookmarks = function clearBookmarks() {
+  localStorage.clear('bookmarks');
+}; // clearBookmarks();
 },{"regenerator-runtime":"node_modules/regenerator-runtime/runtime.js","./config.js":"src/js/config.js","./helpers.js":"src/js/helpers.js"}],"src/img/icons.svg":[function(require,module,exports) {
 module.exports = "/icons.ae3c38d5.svg";
 },{}],"src/js/views/View.js":[function(require,module,exports) {
