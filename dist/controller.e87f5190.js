@@ -1139,6 +1139,33 @@ var View = /*#__PURE__*/function () {
       this._parentElement.insertAdjacentHTML('afterbegin', markup);
     }
   }, {
+    key: "update",
+    value: function update(data) {
+      if (!data || Array.isArray(data) && data.length === 0) return this.renderError();
+      this._data = data;
+
+      var newMarkup = this._generateMarkup();
+
+      var newDOM = document.createRange().createContextualFragment(newMarkup);
+      var newElements = Array.from(newDOM.querySelectorAll('*'));
+      var curElements = Array.from(this._parentElement.querySelectorAll('*')); // Updates changed TEXT
+
+      newElements.forEach(function (newEl, i) {
+        var _newEl$firstChild;
+
+        var curEl = curElements[i];
+
+        if (!newEl.isEqualNode(curEl) && ((_newEl$firstChild = newEl.firstChild) === null || _newEl$firstChild === void 0 ? void 0 : _newEl$firstChild.nodeValue.trim()) !== '') {
+          curEl.textContent = newEl.textContent;
+        } // Updates changed ATTRIBUTES
+
+
+        if (!newEl.isEqualNode(curEl)) Array.from(newEl.attributes).forEach(function (attr) {
+          return curEl.setAttribute(attr.name, attr.value);
+        });
+      });
+    }
+  }, {
     key: "_clear",
     value: function _clear() {
       this._parentElement.innerHTML = '';
@@ -3151,7 +3178,7 @@ var controlServings = function controlServings(newServings) {
   // Update the recipe servings in the state
   model.updateServings(newServings); // Update the recipe view
 
-  _recipeView.default.render(model.state.recipe);
+  _recipeView.default.update(model.state.recipe);
 };
 
 var init = function init() {
