@@ -1943,6 +1943,88 @@ var PaginationView = /*#__PURE__*/function (_View) {
 var _default = new PaginationView();
 
 exports.default = _default;
+},{"./View.js":"src/js/views/View.js","../../img/icons.svg":"src/img/icons.svg"}],"src/js/views/bookmarksView.js":[function(require,module,exports) {
+"use strict";
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+exports.default = void 0;
+
+var _View2 = _interopRequireDefault(require("./View.js"));
+
+var _icons = _interopRequireDefault(require("../../img/icons.svg"));
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+function _typeof(obj) { "@babel/helpers - typeof"; if (typeof Symbol === "function" && typeof Symbol.iterator === "symbol") { _typeof = function _typeof(obj) { return typeof obj; }; } else { _typeof = function _typeof(obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; }; } return _typeof(obj); }
+
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+function _defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } }
+
+function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _defineProperties(Constructor.prototype, protoProps); if (staticProps) _defineProperties(Constructor, staticProps); return Constructor; }
+
+function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function"); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, writable: true, configurable: true } }); if (superClass) _setPrototypeOf(subClass, superClass); }
+
+function _setPrototypeOf(o, p) { _setPrototypeOf = Object.setPrototypeOf || function _setPrototypeOf(o, p) { o.__proto__ = p; return o; }; return _setPrototypeOf(o, p); }
+
+function _createSuper(Derived) { var hasNativeReflectConstruct = _isNativeReflectConstruct(); return function _createSuperInternal() { var Super = _getPrototypeOf(Derived), result; if (hasNativeReflectConstruct) { var NewTarget = _getPrototypeOf(this).constructor; result = Reflect.construct(Super, arguments, NewTarget); } else { result = Super.apply(this, arguments); } return _possibleConstructorReturn(this, result); }; }
+
+function _possibleConstructorReturn(self, call) { if (call && (_typeof(call) === "object" || typeof call === "function")) { return call; } return _assertThisInitialized(self); }
+
+function _assertThisInitialized(self) { if (self === void 0) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return self; }
+
+function _isNativeReflectConstruct() { if (typeof Reflect === "undefined" || !Reflect.construct) return false; if (Reflect.construct.sham) return false; if (typeof Proxy === "function") return true; try { Boolean.prototype.valueOf.call(Reflect.construct(Boolean, [], function () {})); return true; } catch (e) { return false; } }
+
+function _getPrototypeOf(o) { _getPrototypeOf = Object.setPrototypeOf ? Object.getPrototypeOf : function _getPrototypeOf(o) { return o.__proto__ || Object.getPrototypeOf(o); }; return _getPrototypeOf(o); }
+
+function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
+
+var BookmarksView = /*#__PURE__*/function (_View) {
+  _inherits(BookmarksView, _View);
+
+  var _super = _createSuper(BookmarksView);
+
+  function BookmarksView() {
+    var _this;
+
+    _classCallCheck(this, BookmarksView);
+
+    for (var _len = arguments.length, args = new Array(_len), _key = 0; _key < _len; _key++) {
+      args[_key] = arguments[_key];
+    }
+
+    _this = _super.call.apply(_super, [this].concat(args));
+
+    _defineProperty(_assertThisInitialized(_this), "_parentElement", document.querySelector('.bookmarks__list'));
+
+    _defineProperty(_assertThisInitialized(_this), "_errorMessage", 'No bookmarks yet. Find a recipe you like and bookmark it.');
+
+    _defineProperty(_assertThisInitialized(_this), "_message", '');
+
+    return _this;
+  }
+
+  _createClass(BookmarksView, [{
+    key: "_generateMarkup",
+    value: function _generateMarkup() {
+      return this._data.map(this._generateMarkupPreview).join('');
+    }
+  }, {
+    key: "_generateMarkupPreview",
+    value: function _generateMarkupPreview(result) {
+      var id = window.location.hash.slice(1);
+      return "\n    <li class=\"preview\">\n    <a class=\"preview__link ".concat(result.id === id ? 'preview__link--active' : '', "\" href=\"#").concat(result.id, "\">\n    <figure class=\"preview__fig\">\n        <img src=\"").concat(result.image, "\" alt=\"Test\" />\n    </figure>\n    <div class=\"preview__data\">\n        <h4 class=\"preview__title\">").concat(result.title, "</h4>\n        <p class=\"preview__publisher\">").concat(result.publisher, "</p>\n    </div>\n    </a>\n</li>");
+    }
+  }]);
+
+  return BookmarksView;
+}(_View2.default);
+
+var _default = new BookmarksView();
+
+exports.default = _default;
 },{"./View.js":"src/js/views/View.js","../../img/icons.svg":"src/img/icons.svg"}],"node_modules/core-js/modules/_a-function.js":[function(require,module,exports) {
 module.exports = function (it) {
   if (typeof it != 'function') throw TypeError(it + ' is not a function!');
@@ -3075,6 +3157,8 @@ var _resultsView = _interopRequireDefault(require("./views/resultsView.js"));
 
 var _paginationView = _interopRequireDefault(require("./views/paginationView.js"));
 
+var _bookmarksView = _interopRequireDefault(require("./views/bookmarksView.js"));
+
 require("regenerator-runtime/runtime");
 
 require("core-js/core");
@@ -3117,31 +3201,33 @@ var controlRecipes = /*#__PURE__*/function () {
             _recipeView.default.renderSpinner(); // 1) Update results view to mark selected search result
 
 
-            _resultsView.default.update(model.getSearchResultsPage()); // 2) Loading recipe
+            _resultsView.default.update(model.getSearchResultsPage());
+
+            _bookmarksView.default.update(model.state.bookmarks); // 2) Loading recipe
 
 
-            _context.next = 8;
+            _context.next = 9;
             return model.loadRecipe(id);
 
-          case 8:
+          case 9:
             // 3) Rendering recipe:
             _recipeView.default.render(model.state.recipe);
 
-            _context.next = 14;
+            _context.next = 15;
             break;
 
-          case 11:
-            _context.prev = 11;
+          case 12:
+            _context.prev = 12;
             _context.t0 = _context["catch"](0);
 
             _recipeView.default.renderError();
 
-          case 14:
+          case 15:
           case "end":
             return _context.stop();
         }
       }
-    }, _callee, null, [[0, 11]]);
+    }, _callee, null, [[0, 12]]);
   }));
 
   return function controlRecipes() {
@@ -3219,13 +3305,18 @@ var controlServings = function controlServings(newServings) {
 };
 
 var controlAddBookmark = function controlAddBookmark() {
+  // 1 Add/remove bookmark
   if (!model.state.recipe.bookmarked) {
     model.addBookmark(model.state.recipe);
   } else {
     model.deleteBookmark(model.state.recipe.id);
-  }
+  } // 2 Update recipe view
 
-  _recipeView.default.update(model.state.recipe);
+
+  _recipeView.default.update(model.state.recipe); // 3 Render bookmarks
+
+
+  _bookmarksView.default.render(model.state.bookmarks);
 };
 
 var init = function init() {
@@ -3241,7 +3332,7 @@ var init = function init() {
 };
 
 init();
-},{"./model.js":"src/js/model.js","./views/recipeView.js":"src/js/views/recipeView.js","./views/searchView.js":"src/js/views/searchView.js","./views/resultsView.js":"src/js/views/resultsView.js","./views/paginationView.js":"src/js/views/paginationView.js","regenerator-runtime/runtime":"node_modules/regenerator-runtime/runtime.js","core-js/core":"node_modules/core-js/core/index.js"}],"node_modules/parcel-bundler/src/builtins/hmr-runtime.js":[function(require,module,exports) {
+},{"./model.js":"src/js/model.js","./views/recipeView.js":"src/js/views/recipeView.js","./views/searchView.js":"src/js/views/searchView.js","./views/resultsView.js":"src/js/views/resultsView.js","./views/paginationView.js":"src/js/views/paginationView.js","./views/bookmarksView.js":"src/js/views/bookmarksView.js","regenerator-runtime/runtime":"node_modules/regenerator-runtime/runtime.js","core-js/core":"node_modules/core-js/core/index.js"}],"node_modules/parcel-bundler/src/builtins/hmr-runtime.js":[function(require,module,exports) {
 var global = arguments[3];
 var OVERLAY_ID = '__parcel__error__overlay__';
 var OldModule = module.bundle.Module;
