@@ -2,9 +2,10 @@
   "name": "forkify",
   "version": "1.0.0",
   "description": "",
-  "main": "index.html",
+  "default": "index.html",
   "scripts": {
-    "start": "parcel index.html"
+    "start": "parcel index.html",
+    "build": "parcel build --no-minify index.html --out-dir ./dist"
   },
   "author": "Nicholas De Raj",
   "license": "ISC",
