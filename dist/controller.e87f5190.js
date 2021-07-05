@@ -1599,6 +1599,8 @@ function _defineProperties(target, props) { for (var i = 0; i < props.length; i+
 
 function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _defineProperties(Constructor.prototype, protoProps); if (staticProps) _defineProperties(Constructor, staticProps); return Constructor; }
 
+function _classPrivateMethodGet(receiver, privateSet, fn) { if (!privateSet.has(receiver)) { throw new TypeError("attempted to get private field on non-instance"); } return fn; }
+
 function _classPrivateFieldGet(receiver, privateMap) { var descriptor = _classExtractFieldDescriptor(receiver, privateMap, "get"); return _classApplyDescriptorGet(receiver, descriptor); }
 
 function _classExtractFieldDescriptor(receiver, privateMap, action) { if (!privateMap.has(receiver)) { throw new TypeError("attempted to " + action + " private field on non-instance"); } return privateMap.get(receiver); }
@@ -1607,9 +1609,13 @@ function _classApplyDescriptorGet(receiver, descriptor) { if (descriptor.get) { 
 
 var _parentElement = /*#__PURE__*/new WeakMap();
 
+var _clearInput = /*#__PURE__*/new WeakSet();
+
 var SearchView = /*#__PURE__*/function () {
   function SearchView() {
     _classCallCheck(this, SearchView);
+
+    _clearInput.add(this);
 
     _parentElement.set(this, {
       writable: true,
@@ -1620,7 +1626,11 @@ var SearchView = /*#__PURE__*/function () {
   _createClass(SearchView, [{
     key: "getQuery",
     value: function getQuery() {
-      return _classPrivateFieldGet(this, _parentElement).querySelector('.search__field').value;
+      var query = _classPrivateFieldGet(this, _parentElement).querySelector('.search__field').value;
+
+      _classPrivateMethodGet(this, _clearInput, _clearInput2).call(this);
+
+      return query;
     }
   }, {
     key: "addHandlerSearch",
@@ -1634,6 +1644,10 @@ var SearchView = /*#__PURE__*/function () {
 
   return SearchView;
 }();
+
+function _clearInput2() {
+  _classPrivateFieldGet(this, _parentElement).querySelector('.search__field').value = '';
+}
 
 var _default = new SearchView();
 
@@ -2841,6 +2855,7 @@ var controlSearchResults = /*#__PURE__*/function () {
         switch (_context2.prev = _context2.next) {
           case 0:
             _context2.prev = 0;
+            // 1 Get search query
             query = _SearchView.default.getQuery();
 
             if (query) {
@@ -2855,6 +2870,7 @@ var controlSearchResults = /*#__PURE__*/function () {
             return model.loadSearchResults(query);
 
           case 6:
+            // 3 Render results
             console.log(model.state.search.results);
             _context2.next = 12;
             break;
