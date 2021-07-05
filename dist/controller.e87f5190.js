@@ -1103,6 +1103,7 @@ var View = /*#__PURE__*/function () {
   _createClass(View, [{
     key: "render",
     value: function render(data) {
+      if (!data || Array.isArray(data) && data.length === 0) return this.renderError();
       this._data = data;
 
       var markup = this._generateMarkup();
@@ -1595,7 +1596,7 @@ var RecipeView = /*#__PURE__*/function (_View) {
   }, {
     key: "_generateMarkup",
     value: function _generateMarkup() {
-      return "\n    <figure class=\"recipe__fig\">\n    <img src=\"".concat(this._data.image, "\" alt=\"").concat(this._data.title, "\" class=\"recipe__img\" />\n    <h1 class=\"recipe__title\">\n    <span>").concat(this._data.title, "</span>\n    </h1>\n  </figure>\n\n  <div class=\"recipe__details\">\n    <div class=\"recipe__info\">\n      <svg class=\"recipe__info-icon\">\n        <use href=\"").concat(_icons.default, "#icon-clock\"></use>\n      </svg>\n      <span class=\"recipe__info-data recipe__info-data--minutes\">").concat(this._data.cookingTime, "</span>\n      <span class=\"recipe__info-text\">minutes</span>\n    </div>\n    <div class=\"recipe__info\">\n      <svg class=\"recipe__info-icon\">\n        <use href=\"").concat(_icons.default, "#icon-users\"></use>\n      </svg>\n      <span class=\"recipe__info-data recipe__info-data--people\">").concat(this._data.servings, "</span>\n      <span class=\"recipe__info-text\">servings</span>\n\n      <div class=\"recipe__info-buttons\">\n        <button class=\"btn--tiny btn--increase-servings\">\n          <svg>\n            <use href=\"").concat(_icons.default, "#icon-minus-circle\"></use>\n          </svg>\n        </button>\n        <button class=\"btn--tiny btn--increase-servings\">\n          <svg>\n            <use href=\"").concat(_icons.default, "#icon-plus-circle\"></use>\n          </svg>\n        </button>\n      </div>\n    </div>\n\n    <div class=\"recipe__user-generated\">\n      <svg>\n        <use href=\"").concat(_icons.default, "#icon-user\"></use>\n      </svg>\n    </div>\n    <button class=\"btn--round\">\n      <svg class=\"\">\n        <use href=\"").concat(_icons.default, "#icon-bookmark-fill\"></use>\n      </svg>\n    </button>\n  </div>\n\n  <div class=\"recipe__ingredients\">\n    <h2 class=\"heading--2\">Recipe ingredients</h2>\n    <ul class=\"recipe__ingredient-list\">\n      ").concat(this._data.ingredients.map(this._generateMarkupIngredient).join(''), "\n    </ul>\n  </div>\n\n  <div class=\"recipe__directions\">\n    <h2 class=\"heading--2\">How to cook it</h2>\n    <p class=\"recipe__directions-text\">\n      This recipe was carefully designed and tested by\n      <span class=\"recipe__publisher\">").concat(this._data.publisher, "</span>. Please check out\n      directions at their website.\n    </p>\n    <a\n      class=\"btn--small recipe__btn\"\n      href=\"").concat(this._data.sourceUrl, "\"\n      target=\"_blank\"\n    >\n      <span>Directions</span>\n      <svg class=\"search__icon\">\n        <use href=\"").concat(_icons.default, "#icon-arrow-right\"></use>\n      </svg>\n    </a>\n  </div>");
+      return "\n    <figure class=\"recipe__fig\">\n    <img src=\"".concat(this._data.image, "\" alt=\"").concat(this._data.title, "\" class=\"recipe__img\" />\n    <h1 class=\"recipe__title\">\n    <span>").concat(this._data.title, "</span>\n    </h1>\n  </figure>\n\n  <div class=\"recipe__details\">\n    <div class=\"recipe__info\">\n      <svg class=\"recipe__info-icon\">\n        <use href=\"").concat(_icons.default, "#icon-clock\"></use>\n      </svg>\n      <span class=\"recipe__info-data recipe__info-data--minutes\">").concat(this._data.cookingTime, "</span>\n      <span class=\"recipe__info-text\">minutes</span>\n    </div>\n    <div class=\"recipe__info\">\n      <svg class=\"recipe__info-icon\">\n        <use href=\"").concat(_icons.default, "#icon-users\"></use>\n      </svg>\n      <span class=\"recipe__info-data recipe__info-data--people\">").concat(this._data.servings, "</span>\n      <span class=\"recipe__info-text\">servings</span>\n\n      <div class=\"recipe__info-buttons\">\n        <button class=\"btn--tiny btn--increase-servings\">\n          <svg>\n            <use href=\"").concat(_icons.default, "#icon-minus-circle\"></use>\n          </svg>\n        </button>\n        <button class=\"btn--tiny btn--increase-servings\">\n          <svg>\n            <use href=\"").concat(_icons.default, "#icon-plus-circle\"></use>\n          </svg>\n        </button>\n      </div>\n    </div>\n\n    <div class=\"recipe__user-generated\">\n    </div>\n    <button class=\"btn--round\">\n      <svg class=\"\">\n        <use href=\"").concat(_icons.default, "#icon-bookmark-fill\"></use>\n      </svg>\n    </button>\n  </div>\n\n  <div class=\"recipe__ingredients\">\n    <h2 class=\"heading--2\">Recipe ingredients</h2>\n    <ul class=\"recipe__ingredient-list\">\n      ").concat(this._data.ingredients.map(this._generateMarkupIngredient).join(''), "\n    </ul>\n  </div>\n\n  <div class=\"recipe__directions\">\n    <h2 class=\"heading--2\">How to cook it</h2>\n    <p class=\"recipe__directions-text\">\n      This recipe was carefully designed and tested by\n      <span class=\"recipe__publisher\">").concat(this._data.publisher, "</span>. Please check out\n      directions at their website.\n    </p>\n    <a\n      class=\"btn--small recipe__btn\"\n      href=\"").concat(this._data.sourceUrl, "\"\n      target=\"_blank\"\n    >\n      <span>Directions</span>\n      <svg class=\"search__icon\">\n        <use href=\"").concat(_icons.default, "#icon-arrow-right\"></use>\n      </svg>\n    </a>\n  </div>");
     }
   }, {
     key: "_generateMarkupIngredient",
@@ -1610,7 +1611,7 @@ var RecipeView = /*#__PURE__*/function (_View) {
 var _default = new RecipeView();
 
 exports.default = _default;
-},{"./View.js":"src/js/views/View.js","../../img/icons.svg":"src/img/icons.svg","fractional":"node_modules/fractional/index.js"}],"src/js/views/SearchView.js":[function(require,module,exports) {
+},{"./View.js":"src/js/views/View.js","../../img/icons.svg":"src/img/icons.svg","fractional":"node_modules/fractional/index.js"}],"src/js/views/searchView.js":[function(require,module,exports) {
 "use strict";
 
 Object.defineProperty(exports, "__esModule", {
@@ -1663,7 +1664,88 @@ var SearchView = /*#__PURE__*/function () {
 var _default = new SearchView();
 
 exports.default = _default;
-},{}],"node_modules/core-js/modules/_a-function.js":[function(require,module,exports) {
+},{}],"src/js/views/resultsView.js":[function(require,module,exports) {
+"use strict";
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+exports.default = void 0;
+
+var _View2 = _interopRequireDefault(require("./View.js"));
+
+var _icons = _interopRequireDefault(require("../../img/icons.svg"));
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+function _typeof(obj) { "@babel/helpers - typeof"; if (typeof Symbol === "function" && typeof Symbol.iterator === "symbol") { _typeof = function _typeof(obj) { return typeof obj; }; } else { _typeof = function _typeof(obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; }; } return _typeof(obj); }
+
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+function _defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } }
+
+function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _defineProperties(Constructor.prototype, protoProps); if (staticProps) _defineProperties(Constructor, staticProps); return Constructor; }
+
+function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function"); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, writable: true, configurable: true } }); if (superClass) _setPrototypeOf(subClass, superClass); }
+
+function _setPrototypeOf(o, p) { _setPrototypeOf = Object.setPrototypeOf || function _setPrototypeOf(o, p) { o.__proto__ = p; return o; }; return _setPrototypeOf(o, p); }
+
+function _createSuper(Derived) { var hasNativeReflectConstruct = _isNativeReflectConstruct(); return function _createSuperInternal() { var Super = _getPrototypeOf(Derived), result; if (hasNativeReflectConstruct) { var NewTarget = _getPrototypeOf(this).constructor; result = Reflect.construct(Super, arguments, NewTarget); } else { result = Super.apply(this, arguments); } return _possibleConstructorReturn(this, result); }; }
+
+function _possibleConstructorReturn(self, call) { if (call && (_typeof(call) === "object" || typeof call === "function")) { return call; } return _assertThisInitialized(self); }
+
+function _assertThisInitialized(self) { if (self === void 0) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return self; }
+
+function _isNativeReflectConstruct() { if (typeof Reflect === "undefined" || !Reflect.construct) return false; if (Reflect.construct.sham) return false; if (typeof Proxy === "function") return true; try { Boolean.prototype.valueOf.call(Reflect.construct(Boolean, [], function () {})); return true; } catch (e) { return false; } }
+
+function _getPrototypeOf(o) { _getPrototypeOf = Object.setPrototypeOf ? Object.getPrototypeOf : function _getPrototypeOf(o) { return o.__proto__ || Object.getPrototypeOf(o); }; return _getPrototypeOf(o); }
+
+function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
+
+var ResultsView = /*#__PURE__*/function (_View) {
+  _inherits(ResultsView, _View);
+
+  var _super = _createSuper(ResultsView);
+
+  function ResultsView() {
+    var _this;
+
+    _classCallCheck(this, ResultsView);
+
+    for (var _len = arguments.length, args = new Array(_len), _key = 0; _key < _len; _key++) {
+      args[_key] = arguments[_key];
+    }
+
+    _this = _super.call.apply(_super, [this].concat(args));
+
+    _defineProperty(_assertThisInitialized(_this), "_parentElement", document.querySelector('.results'));
+
+    _defineProperty(_assertThisInitialized(_this), "_errorMessage", 'No recipes found, try another search.');
+
+    _defineProperty(_assertThisInitialized(_this), "_message", '');
+
+    return _this;
+  }
+
+  _createClass(ResultsView, [{
+    key: "_generateMarkup",
+    value: function _generateMarkup() {
+      return this._data.map(this._generateMarkupPreview).join('');
+    }
+  }, {
+    key: "_generateMarkupPreview",
+    value: function _generateMarkupPreview(result) {
+      return "\n    <li class=\"preview\">\n    <a class=\"preview__link\" href=\"#".concat(result.id, "\">\n    <figure class=\"preview__fig\">\n        <img src=\"").concat(result.image, "\" alt=\"Test\" />\n    </figure>\n    <div class=\"preview__data\">\n        <h4 class=\"preview__title\">").concat(result.title, "</h4>\n        <p class=\"preview__publisher\">").concat(result.publisher, "</p>\n    </div>\n    </a>\n</li>");
+    }
+  }]);
+
+  return ResultsView;
+}(_View2.default);
+
+var _default = new ResultsView();
+
+exports.default = _default;
+},{"./View.js":"src/js/views/View.js","../../img/icons.svg":"src/img/icons.svg"}],"node_modules/core-js/modules/_a-function.js":[function(require,module,exports) {
 module.exports = function (it) {
   if (typeof it != 'function') throw TypeError(it + ' is not a function!');
   return it;
@@ -2789,7 +2871,9 @@ var model = _interopRequireWildcard(require("./model.js"));
 
 var _recipeView = _interopRequireDefault(require("./views/recipeView.js"));
 
-var _SearchView = _interopRequireDefault(require("./views/SearchView.js"));
+var _searchView = _interopRequireDefault(require("./views/searchView.js"));
+
+var _resultsView = _interopRequireDefault(require("./views/resultsView.js"));
 
 require("regenerator-runtime/runtime");
 
@@ -2807,6 +2891,11 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
 
 // https://forkify-api.herokuapp.com/v2
 ///////////////////////////////////////
+// Hot module reloading (from Parcel not JavaScript)
+if (module.hot) {
+  module.hot.accept();
+}
+
 var controlRecipes = /*#__PURE__*/function () {
   var _ref = _asyncToGenerator( /*#__PURE__*/regeneratorRuntime.mark(function _callee() {
     var id;
@@ -2815,7 +2904,7 @@ var controlRecipes = /*#__PURE__*/function () {
         switch (_context.prev = _context.next) {
           case 0:
             _context.prev = 0;
-            id = window.location.hash.slice(1); // console.log(id);
+            id = window.location.hash.slice(1);
 
             if (id) {
               _context.next = 4;
@@ -2866,38 +2955,42 @@ var controlSearchResults = /*#__PURE__*/function () {
         switch (_context2.prev = _context2.next) {
           case 0:
             _context2.prev = 0;
-            // 1 Get search query
-            query = _SearchView.default.getQuery();
+
+            _resultsView.default.renderSpinner(); // 1 Get search query
+
+
+            query = _searchView.default.getQuery();
 
             if (query) {
-              _context2.next = 4;
+              _context2.next = 5;
               break;
             }
 
             return _context2.abrupt("return");
 
-          case 4:
-            _context2.next = 6;
+          case 5:
+            _context2.next = 7;
             return model.loadSearchResults(query);
 
-          case 6:
+          case 7:
             // 3 Render results
-            console.log(model.state.search.results);
-            _context2.next = 12;
+            _resultsView.default.render(model.state.search.results);
+
+            _context2.next = 13;
             break;
 
-          case 9:
-            _context2.prev = 9;
+          case 10:
+            _context2.prev = 10;
             _context2.t0 = _context2["catch"](0);
 
             _recipeView.default.renderError();
 
-          case 12:
+          case 13:
           case "end":
             return _context2.stop();
         }
       }
-    }, _callee2, null, [[0, 9]]);
+    }, _callee2, null, [[0, 10]]);
   }));
 
   return function controlSearchResults() {
@@ -2908,11 +3001,11 @@ var controlSearchResults = /*#__PURE__*/function () {
 var init = function init() {
   _recipeView.default.addHandlerRender(controlRecipes);
 
-  _SearchView.default.addHandlerSearch(controlSearchResults);
+  _searchView.default.addHandlerSearch(controlSearchResults);
 };
 
 init();
-},{"./model.js":"src/js/model.js","./views/recipeView.js":"src/js/views/recipeView.js","./views/SearchView.js":"src/js/views/SearchView.js","regenerator-runtime/runtime":"node_modules/regenerator-runtime/runtime.js","core-js/core":"node_modules/core-js/core/index.js"}],"node_modules/parcel-bundler/src/builtins/hmr-runtime.js":[function(require,module,exports) {
+},{"./model.js":"src/js/model.js","./views/recipeView.js":"src/js/views/recipeView.js","./views/searchView.js":"src/js/views/searchView.js","./views/resultsView.js":"src/js/views/resultsView.js","regenerator-runtime/runtime":"node_modules/regenerator-runtime/runtime.js","core-js/core":"node_modules/core-js/core/index.js"}],"node_modules/parcel-bundler/src/builtins/hmr-runtime.js":[function(require,module,exports) {
 var global = arguments[3];
 var OVERLAY_ID = '__parcel__error__overlay__';
 var OldModule = module.bundle.Module;
