@@ -883,7 +883,7 @@ var RES_PER_PAGE = 10;
 exports.RES_PER_PAGE = RES_PER_PAGE;
 var KEY = 'f16e1188-99e1-4131-8920-91b38ff2683a';
 exports.KEY = KEY;
-var MODAL_CLOSE_SEC = 2.5;
+var MODAL_CLOSE_SEC = 1;
 exports.MODAL_CLOSE_SEC = MODAL_CLOSE_SEC;
 },{}],"src/js/helpers.js":[function(require,module,exports) {
 "use strict";
@@ -1122,12 +1122,14 @@ var loadSearchResults = /*#__PURE__*/function () {
           case 4:
             data = _context2.sent;
             state.search.results = data.data.recipes.map(function (rec) {
-              return {
+              return _objectSpread({
                 id: rec.id,
                 title: rec.title,
                 publisher: rec.publisher,
                 image: rec.image_url
-              };
+              }, rec.key && {
+                key: rec.key
+              });
             });
             state.search.page = 1;
             _context2.next = 12;
@@ -1225,7 +1227,10 @@ var uploadRecipe = /*#__PURE__*/function () {
             ingredients = Object.entries(newRecipe).filter(function (entry) {
               return entry[0].startsWith('ingredient') && entry[1] !== '';
             }).map(function (ing) {
-              var ingArr = ing[1].replaceAll(' ', '').split(',');
+              var ingArr = ing[1].split(',').map(function (el) {
+                return el.trim();
+              }); // const ingArr = ing[1].replaceAll(' ', '').split(',');
+
               if (ingArr.length !== 3) throw new Error('Wrong ingredient format! Please use the correct format');
 
               var _ingArr = _slicedToArray(ingArr, 3),
